@@ -14,6 +14,24 @@ public class FlomioApiHelper {
 	private enum RequestMethod {
 		GET, POST, DELETE, PUT
 	}
+	private static class PathBuilder{
+		private StringBuilder path = new StringBuilder();
+		public PathBuilder addPart(String part) {
+			String base = path.toString();
+			if (part.startsWith("/")) {
+				part = part.substring(1);
+			}
+			if (!base.endsWith("/") && base.length()>0){
+				path.append("/");
+			}
+			path.append(part);
+
+			return this;
+		}
+		public String toString() {
+			return path.toString();
+		}
+	}
 
 	private String user;
 	private String password;
@@ -50,7 +68,7 @@ public class FlomioApiHelper {
 				.toUpperCase());
 
 		HttpUriRequest request = null;
-		final String url = baseUrl + "/" + path;
+		final String url = makeUrl(path);
 
 		try {
 			// make correct request
@@ -82,5 +100,9 @@ public class FlomioApiHelper {
 				+ encodeuserpass));
 
 		return request;
+	}
+	private String makeUrl(String path) {
+		PathBuilder pathBuilder = new PathBuilder();
+		return pathBuilder.addPart(baseUrl).addPart(user).addPart(path).toString();
 	}
 }

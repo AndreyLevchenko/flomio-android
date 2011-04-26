@@ -1,6 +1,5 @@
 package com.flomio.api.android.example;
 
-import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -27,22 +26,21 @@ public class HelperTest extends Activity {
 		}
 	};
 
-	private final String USER_NAME = "AndreyL";
-	private final String USER_ID = "6";
+	private final String USER_NAME = "AndreyLTEST";
 	private final String PASSWORD = "flomioREST";
-	private final String BASE_URL = "http://api.flomio.com/1.0/accounts/";
+	private final String BASE_URL = "http://testapi.flomio.com/1.0/accounts/";
 	private final String BUNDLE_KEY = "msg";
 
 	private OnClickListener mRequestListener = new OnClickListener() {
 		public void onClick(View v) {
 			FlomioApiHelper helper = new FlomioApiHelper(USER_NAME, PASSWORD,
-					BASE_URL + USER_ID);
+					BASE_URL);
 			Map<String, String> params = new HashMap<String, String>();
 
 //			params.put("uid", "333");
 //			params.put("description", "andrl test A");
 
-			helper.request("terminals/", "GET", params,
+			helper.request("terminals", "GET", params,
 					new IFlomioResponseHandler() {
 						private Message msg = handler.obtainMessage();
 
